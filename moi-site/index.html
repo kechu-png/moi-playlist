@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>喵西Moi · 歌单</title>
+<meta name="description" content="喵西Moi 的点歌单：摇摇车、古风、流行、硬猫配硬曲。">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='9'%20fill='%230d1a12'/%3E%3Crect%20x='9'%20y='13'%20width='3'%20height='7'%20rx='1.5'%20fill='%233fdc8b'/%3E%3Crect%20x='14.5'%20y='9'%20width='3'%20height='15'%20rx='1.5'%20fill='%233fdc8b'/%3E%3Crect%20x='20'%20y='14'%20width='3'%20height='7'%20rx='1.5'%20fill='%233fdc8b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <button id="themeToggle" class="icon-btn theme-btn" type="button" aria-label="切换深浅色">◐</button>
+
+    <div class="portrait-wrap">
+      <img id="portrait" class="portrait" alt="" width="104" height="118" hidden>
+      <span id="portraitFallback" class="portrait-fallback" aria-hidden="true">喵</span>
+    </div>
+
+    <div class="hero-text">
+      <h1><span class="name" id="pageName">喵西Moi</span><span class="h1-sub">歌单</span></h1>
+      <p class="stats" id="stats"></p>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="search-row">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M16.5 16.5 21 21"></path></svg>
+        <input id="search" type="search" placeholder="搜歌名 / 原唱 / 备注" autocomplete="off" spellcheck="false" aria-label="搜索歌曲">
+        <button id="clear" class="clear-btn" type="button" aria-label="清空搜索" hidden>✕</button>
+      </div>
+      <button id="addBtn" class="add-btn" type="button" aria-haspopup="dialog">
+        <span class="plus">＋</span><span class="add-label">加歌</span>
+      </button>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="按分组筛选"></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div id="banner" class="banner" hidden></div>
+  <p class="result-count" id="resultCount" hidden></p>
+  <div id="list"></div>
+  <p class="empty" id="empty" hidden>没有找到，换个词试试</p>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>翻唱版权归原作者与演唱者所有，本站仅作曲目索引。</p>
+    <p class="muted"><span id="footSource"></span>按 <kbd>/</kbd> 搜索 · <kbd>Esc</kbd> 清空</p>
+  </div>
+</footer>
+
+<dialog id="addDialog" class="dialog" aria-labelledby="dlgTitle">
+  <form id="addForm" autocomplete="off">
+    <div class="dialog-head">
+      <h2 id="dlgTitle">加一首歌</h2>
+      <button type="button" id="btnClose" class="icon-btn small" aria-label="关闭">✕</button>
+    </div>
+
+    <div class="field">
+      <label for="f-group">分组</label>
+      <select id="f-group"></select>
+    </div>
+
+    <div class="field" id="newGroupField" hidden>
+      <label for="f-newgroup">新分组名</label>
+      <input id="f-newgroup" type="text" placeholder="例如：乐器">
+    </div>
+
+    <div class="field">
+      <label for="f-original">原唱<span class="opt">可选</span></label>
+      <input id="f-original" type="text" placeholder="填了会归到该歌手的小节下" list="originals">
+      <datalist id="originals"></datalist>
+    </div>
+
+    <div class="field">
+      <label for="f-title">歌名<span class="req">必填</span></label>
+      <input id="f-title" type="text" placeholder="例如：晴天" required>
+    </div>
+
+    <div class="field">
+      <label for="f-remark">备注<span class="opt">可选</span></label>
+      <input id="f-remark" type="text" placeholder="例如：高音 / 中文版">
+    </div>
+
+    <p class="hint">新增只存在本机浏览器；导出 <code>songs.js</code> 替换文件后才对粉丝生效。</p>
+
+    <div id="localList" class="local-list"></div>
+
+    <div class="dialog-actions">
+      <button type="button" id="btnExport" class="ghost-btn">导出</button>
+      <button type="button" id="btnCancel" class="ghost-btn">取消</button>
+      <button type="submit" class="primary-btn">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="data/songs.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
