@@ -7,6 +7,15 @@ window.PLAYLIST = {
     "source": "主播点歌单",
     "avatar": "",
     "art": "assets/img/moi.jpg",
+    "order": [
+      "古风",
+      "流行",
+      "日语",
+      "摇摇车",
+      "MC喵西喊麦",
+      "硬猫配硬曲",
+      "上舰曲"
+    ],
     "sample": false
   },
   "groups": [
