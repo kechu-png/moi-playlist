@@ -133,6 +133,20 @@
       else group.songs.splice(insertAt, 0, song);
     });
 
+    return sortByOrder(groups);
+  }
+
+  /* 按 meta.order 指定的顺序排列分组；未列出的保持原序排到最后 */
+  function sortByOrder(groups) {
+    var order = META.order;
+    if (!order || !order.length) return groups;
+    var rank = {};
+    for (var i = 0; i < order.length; i++) rank[order[i]] = i;
+    groups.sort(function (a, b) {
+      var ra = rank.hasOwnProperty(a.title) ? rank[a.title] : 9999;
+      var rb = rank.hasOwnProperty(b.title) ? rank[b.title] : 9999;
+      return ra - rb;
+    });
     return groups;
   }
 
@@ -376,13 +390,6 @@
       h.textContent = group.title;
       head.appendChild(h);
 
-      if (group.note) {
-        var note = document.createElement("span");
-        note.className = "group-note";
-        note.textContent = group.note;
-        head.appendChild(note);
-      }
-
       var line = document.createElement("span");
       line.className = "group-line";
       head.appendChild(line);
@@ -614,6 +621,7 @@
         source: META.source || "",
         avatar: META.avatar || "",
         art: META.art || "",
+        order: META.order || [],
         sample: false
       },
       groups: groups
